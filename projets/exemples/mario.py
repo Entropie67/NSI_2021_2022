@@ -1,12 +1,17 @@
 import pygame
 from pygame.locals import *
 
+
+# Initialisation de Pygame
 pygame.init()
-
+# création d'une fenête de 640 sur 480
 fenetre = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("Une balle ?")
-
+# Titre de la fenêtre :
+pygame.display.set_caption("Mon jeu")
+# Initialisation d'une horloge.
+# Utile pour gérer la fréquence d'images en jeu
 clock = pygame.time.Clock()
+
 
 continuer = True
 
