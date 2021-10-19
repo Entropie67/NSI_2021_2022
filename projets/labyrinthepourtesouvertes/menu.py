@@ -12,7 +12,7 @@ selection=0
 afficheChemin=False
 poseCalque=True
 pygame.key.set_repeat(200,200)
-resolution=[4096,2160]
+resolution=[2048,1080]
 taillePrevue=64
 nb_joysticks = pygame.joystick.get_count()
 print("Il y a", nb_joysticks, "joystick(s) branché(s)")
