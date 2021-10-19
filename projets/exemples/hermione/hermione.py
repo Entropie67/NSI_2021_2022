@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-
+from config import *
 ###############################
 #      Initialisation         #
 ###############################
@@ -8,9 +8,8 @@ from pygame.locals import *
 # Initialisation de Pygame
 pygame.init()
 # création d'une fenête de 640 sur 480
-L = 640
-H = 480
-TAILLE = 64
+
+
 fenetre = pygame.display.set_mode((L, H))
 # Titre de la fenêtre :
 pygame.display.set_caption("Mon jeu")
@@ -23,15 +22,25 @@ pygame.key.set_repeat(50, 10)
 ###############################
 #       Le fond               #
 ###############################
-# Un fond en couleur
-VIOLET = (127, 0, 255) # Format RGB
+
 # fill pour remplir la fenêtre de la couleur donnée.
 fenetre.fill(VIOLET)
 
 # Une image de fond
-fond = pygame.image.load("sable.jpg").convert()
+#fond = pygame.image.load("sable.jpg").convert()
 # Maintenant il faut coller l'image dans la fenêtre au coordonnées (0, 0)
-fenetre.blit(fond, (0, 0))
+#fenetre.blit(fond, (0, 0))
+
+def update(carte):
+    obstacles = []
+    for ligne in range(len(carte)):
+        for colonne in range(len(carte[0])):
+            if carte[ligne][colonne] == 1:
+                obstacles.append(pygame.Rect(colonne * TAILLE, ligne * TAILLE, TAILLE, TAILLE))
+    return obstacles
+obstacles = update(MAP)
+
+
 
 ###############################
 #       Le perso              #
@@ -73,7 +82,8 @@ pas = 0
 while continuer:
     # gestion des événements non clavier
     # On recolle le fond, pour avoir un fond propre :)
-    fenetre.blit(fond, (0, 0))
+    #fenetre.blit(fond, (0, 0))
+    fenetre.fill(VIOLET)
     for event in pygame.event.get():
         # la croix en haut à droite
         if event.type == QUIT:
@@ -84,6 +94,9 @@ while continuer:
                 #rint("touche Droite")
                 orientation = "d"
                 diana_rec.left += 5
+                for obstacle in obstacles:
+                    if diana_rec.colliderect(obstacle):
+                        diana_rec.right = obstacle.left
             if event.key == K_LEFT:
                 #print("touche gauche")
                 orientation = "g"
@@ -98,10 +111,10 @@ while continuer:
                 #print("touche haut")
                 orientation = "h"
                 diana_rec.top -= 5
-
+    for rectangle in obstacles:
+        pygame.draw.rect(fenetre, GRIS, rectangle, 0)
+    obstacles = update(MAP)
     # Il faut coller l'image dans le rectangle à sa nouvelle place.
     fenetre.blit(dico[orientation][pas % 6], diana_rec)
-
     # On rafraichit à chaque tour de boucle.
-
     pygame.display.flip()

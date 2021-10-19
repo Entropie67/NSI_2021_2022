@@ -28,7 +28,7 @@ VIOLET = (127, 0, 255) # Format RGB
 fenetre.fill(VIOLET)
 
 # Une image de fond
-fond = pygame.image.load("sable.jpg").convert()
+fond = pygame.image.load("hermione/sable.jpg").convert()
 # Maintenant il faut coller l'image dans la fenêtre au coordonnées (0, 0)
 fenetre.blit(fond, (0, 0))
 
